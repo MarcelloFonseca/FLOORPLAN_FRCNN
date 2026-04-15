@@ -2,11 +2,11 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 import yaml
 
-YAML_PATH = Path(r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_dataset\Floor_plan_multiple.yolov8\data.yaml")
-IMAGE_DIR = Path(r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_dataset\Floor_plan_multiple.yolov8\train\images")
-LABELS_DIR = Path(r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_dataset\Floor_plan_multiple.yolov8\train\labels")
+YAML_PATH = Path(r"C:\Users\MarcelloFonseca\Desktop\floorplan_dataset\data.yaml")
+IMAGE_DIR = Path(r"C:\Users\MarcelloFonseca\Desktop\floorplan_dataset\train\images")
+LABELS_DIR = Path(r"C:\Users\MarcelloFonseca\Desktop\floorplan_dataset\train\labels")
 
-IMAGE_INDEX = 10
+IMAGE_INDEX = 4
 OUTPUT_PATH = "ground_truth_output.png"
 
 with open(YAML_PATH, "r", encoding="utf-8") as f:

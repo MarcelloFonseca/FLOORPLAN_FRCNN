@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw
 from torchvision.transforms import functional as F
 
 IMAGE_INDEX = 5
-IMAGE_DIR = Path(r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_dataset\Floor_plan_multiple.yolov8\train\images")
+IMAGE_DIR = Path(r"C:\Users\MarcelloFonseca\Desktop\floorplan_dataset\train\images")
 MODEL_PATH = "floorplan_quick.onnx"
 OUTPUT_PATH = "onnx_prediction_output.png"
 SCORE_THRESHOLD = 0.10

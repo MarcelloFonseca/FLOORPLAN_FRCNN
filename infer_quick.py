@@ -6,13 +6,15 @@ from PIL import Image, ImageDraw
 from torchvision.transforms import functional as F
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 
-CHECKPOINT_PATH = "floorplan_quick.pth" #chemin vers le checkpoint du modèle entrainé. IMPORTANT.
-IMAGE_INDEX = 10
-IMAGE_DIR = Path(r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_dataset\Floor_plan_multiple.yolov8\train\images")
+CHECKPOINT_PATH = "floorplan_door_only2.pth" #chemin vers le checkpoint du modèle entrainé. IMPORTANT.
+IMAGE_INDEX = 4
+IMAGE_DIR = Path(r"C:\Users\MarcelloFonseca\Desktop\floorplan_dataset\train\images")
 images = sorted(IMAGE_DIR.glob("*.*"))
-IMAGE_PATH = images[IMAGE_INDEX]
+#IMAGE_PATH = images[IMAGE_INDEX]
+IMAGE_PATH = r"C:\Users\MarcelloFonseca\Desktop\TestML\TestPlanMachineLearning3.png"
 OUTPUT_PATH = "prediction_output.png"
-SCORE_THRESHOLD = 0.10
+#SCORE_THRESHOLD = 0.55
+SCORE_THRESHOLD = 0.50
 
 def get_model(num_classes: int):
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(

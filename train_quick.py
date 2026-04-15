@@ -7,13 +7,16 @@ from dataset import YoloDetectionDataset, collate_fn, load_class_names
 
 #j'utilise le SummaryWrite pour enregistrer les métriques et les visualiser dans TensorBoard du RCNN
 
-YAML_PATH = r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_dataset\Floor_plan_multiple.yolov8\data.yaml"
-ROOT_DIR = r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_dataset\Floor_plan_multiple.yolov8"
+# YAML_PATH = r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_dataset\Floor_plan_multiple.yolov8\data.yaml"
+# ROOT_DIR = r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_dataset\Floor_plan_multiple.yolov8"
+
+YAML_PATH = r"C:\Users\MarcelloFonseca\Desktop\Floor_plan_Dataset_DoorOnly\data.yaml"
+ROOT_DIR = r"C:\Users\MarcelloFonseca\Desktop\Floor_plan_Dataset_DoorOnly"
 
 TRAIN_MAX_ITEMS = None
-EPOCHS = 10
+EPOCHS = 20
 BATCH_SIZE = 2
-LR = 0.005
+LR = 0.005 #Pour le modele de resnet50 (ne peut pas s'appliquer a un autre modele plus leger comme mobilenet, etc. !)
 
 writer = SummaryWriter()
 
@@ -22,7 +25,6 @@ def get_model(num_classes: int):
     in_features = model.roi_heads.box_predictor.cls_score.in_features #model pre-entraine sur COCO (Common Objects in Context)
     model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
     return model
-
 
 if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu") #j'utilise le GPU si disponible pour accélérer l'entraînement, sinon je tombe sur le CPU
@@ -78,6 +80,7 @@ if __name__ == "__main__":
         "model_state_dict": model.state_dict(),
         "class_names": class_names,
     }
-    torch.save(checkpoint, "floorplan_quick.pth")
+    # torch.save(checkpoint, "floorplan_quick.pth")
+    torch.save(checkpoint, "floorplan_door_only.pth")
     print("Saved floorplan_quick.pth")
     writer.close()

@@ -1,8 +1,7 @@
 import torch
 from train_quick import get_model
 
-checkpoint = torch.load("floorplan_quick.pth", map_location="cpu")
-
+checkpoint = torch.load("floorplan_door_only2.pth", map_location="cpu")
 class_names = checkpoint["class_names"]
 num_classes = len(class_names) + 1
 
@@ -15,9 +14,12 @@ dummy_input = torch.randn(3, 640, 640)
 torch.onnx.export(
     model,
     ([dummy_input],),
-    "floorplan_quick.onnx",
-    opset_version=11,
+    "floorplan_door_only2.onnx",
+    opset_version=17,
     input_names=["images"],
+    dynamic_axes={
+        "images": {1: "height", 2: "width"}
+    }
 )
-
-print("ONNX model saved: floorplan_quick.onnx")
+print(class_names)
+print("ONNX model saved.")
