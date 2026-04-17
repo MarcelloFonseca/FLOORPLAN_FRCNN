@@ -19,7 +19,6 @@ print("Using image:", IMAGE_PATH)
 
 image = Image.open(IMAGE_PATH).convert("RGB")
 
-# Même preprocessing que infer_quick.py
 image_tensor = F.to_tensor(image)
 input_array = image_tensor.numpy().astype(np.float32)
 

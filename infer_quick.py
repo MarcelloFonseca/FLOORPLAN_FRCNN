@@ -6,15 +6,18 @@ from PIL import Image, ImageDraw
 from torchvision.transforms import functional as F
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 
-CHECKPOINT_PATH = "floorplan_door_only2.pth" #chemin vers le checkpoint du modèle entrainé. IMPORTANT.
+CHECKPOINT_PATH = "floorplan_door_only5_hn3.pth" #chemin vers le checkpoint du modèle entrainé. IMPORTANT.
 IMAGE_INDEX = 4
-IMAGE_DIR = Path(r"C:\Users\MarcelloFonseca\Desktop\floorplan_dataset\train\images")
-images = sorted(IMAGE_DIR.glob("*.*"))
+# IMAGE_DIR = Path(r"C:\Users\MarcelloFonseca\Desktop\floorplan_dataset\train\images")
+# IMAGE_DIR = Path(r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_frcnn\TEST_PLAN4.png")
+# images = sorted(IMAGE_DIR.glob("*.*"))
 #IMAGE_PATH = images[IMAGE_INDEX]
-IMAGE_PATH = r"C:\Users\MarcelloFonseca\Desktop\TestML\TestPlanMachineLearning3.png"
+# IMAGE_PATH = r"C:\Users\MarcelloFonseca\Desktop\TestML\TestPlanMachineLearning3.png"
+IMAGE_PATH = r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_frcnn\TEST-PLAN3.png"
 OUTPUT_PATH = "prediction_output.png"
 #SCORE_THRESHOLD = 0.55
-SCORE_THRESHOLD = 0.50
+#SCORE_THRESHOLD = 0.50
+SCORE_THRESHOLD = 0.70
 
 def get_model(num_classes: int):
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(
@@ -24,7 +27,6 @@ def get_model(num_classes: int):
     in_features = model.roi_heads.box_predictor.cls_score.in_features
     model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
     return model
-
 
 if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
