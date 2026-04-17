@@ -3,13 +3,13 @@ import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 
 def get_model(num_classes):
-    model = torchvision.models.detection.fasterrcnn_mobilenet_v3_large_320_fpn(weights=None)
+    model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights=None) 
     in_features = model.roi_heads.box_predictor.cls_score.in_features
     model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
     return model
 
-checkpoint = torch.load("floorplan_door_only_MERGED.pth", map_location="cpu")
-checkpoint = torch.load("floorplan_door_only_MERGED.pth", map_location="cpu")
+# checkpoint = torch.load("floorplan_door_only_MERGED.pth", map_location="cpu")
+checkpoint = torch.load("floorplan_door_only4_hn2.pth", map_location="cpu")
 print(checkpoint["class_names"])  # doit afficher ['door']
 class_names = checkpoint["class_names"]
 num_classes = len(class_names) + 1
@@ -23,7 +23,7 @@ dummy_input = torch.randn(3, 640, 640)
 torch.onnx.export(
     model,
     ([dummy_input],),
-    "floorplan_door_only_MERGED.onnx",
+    "floorplan_door_only4_hn2.onnx",
     opset_version=17,
     input_names=["images"],
     dynamic_axes={

@@ -6,14 +6,15 @@ from PIL import Image, ImageDraw
 from torchvision.transforms import functional as F
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 
-CHECKPOINT_PATH = "floorplan_door_only5_hn3.pth" #chemin vers le checkpoint du modèle entrainé. IMPORTANT.
+CHECKPOINT_PATH = "floorplan_door_only4_hn2.pth" #chemin vers le checkpoint du modèle entrainé. IMPORTANT.
+# CHECKPOINT_PATH ="floorplan_door_only5_hn3.pth"
 IMAGE_INDEX = 4
 # IMAGE_DIR = Path(r"C:\Users\MarcelloFonseca\Desktop\floorplan_dataset\train\images")
 # IMAGE_DIR = Path(r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_frcnn\TEST_PLAN4.png")
 # images = sorted(IMAGE_DIR.glob("*.*"))
 #IMAGE_PATH = images[IMAGE_INDEX]
-# IMAGE_PATH = r"C:\Users\MarcelloFonseca\Desktop\TestML\TestPlanMachineLearning3.png"
-IMAGE_PATH = r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_frcnn\TEST-PLAN3.png"
+IMAGE_PATH = r"C:\Users\MarcelloFonseca\Desktop\TestML\TestPlanMachineLearning6.png"
+# IMAGE_PATH = r" C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_frcnn\TEST-PLAN3.png"
 OUTPUT_PATH = "prediction_output.png"
 #SCORE_THRESHOLD = 0.55
 #SCORE_THRESHOLD = 0.50
@@ -42,6 +43,7 @@ if __name__ == "__main__":
 
     image = Image.open(IMAGE_PATH).convert("RGB")
     image_tensor = F.to_tensor(image).to(device)
+    print(f"pixel[0,0]: R={image_tensor[0,0,0]:.4f} G={image_tensor[1,0,0]:.4f} B={image_tensor[2,0,0]:.4f}")
 
     with torch.no_grad():
         pred = model([image_tensor])[0]
