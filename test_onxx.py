@@ -1,6 +1,6 @@
-import onnxruntime as ort
 import numpy as np
 from pathlib import Path
+import onnxruntime as ort
 from PIL import Image, ImageDraw
 from torchvision.transforms import functional as F
 

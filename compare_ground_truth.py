@@ -1,6 +1,6 @@
+import yaml
 from pathlib import Path
 from PIL import Image, ImageDraw
-import yaml
 
 YAML_PATH = Path(r"C:\Users\MarcelloFonseca\Desktop\floorplan_dataset\data.yaml")
 IMAGE_DIR = Path(r"C:\Users\MarcelloFonseca\Desktop\floorplan_dataset\train\images")

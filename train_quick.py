@@ -16,7 +16,7 @@ OUT_CHECKPOINT  = "floorplan_door_only5_hn3.pth"
 TRAIN_MAX_ITEMS = None
 EPOCHS = 3
 BATCH_SIZE = 2
-LR = 0.00005 
+LR = 0.00005  #IMPORTANT QUIL RESTE PETIT POUR Y ALLER PAR PETITS PAS 
 writer = SummaryWriter()
 
 
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     model.to(device)
 
     params = [p for p in model.parameters() if p.requires_grad]
-    optimizer = torch.optim.SGD(params, lr=LR, momentum=0.9, weight_decay=0.0005)
+    optimizer = torch.optim.SGD(params, lr=LR, momentum=0.9, weight_decay=0.0005) # Stohastic Gradient Descent avec momentum pour aider a regulariser le modele
 
     for epoch in range(EPOCHS):
         model.train()
@@ -75,9 +75,9 @@ if __name__ == "__main__":
             loss_dict = model(images, targets)
             loss = sum(loss for loss in loss_dict.values())
 
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
+            optimizer.zero_grad() #Provient de pytorch pour optimizer 
+            loss.backward() #Backpropagation pour etre en mesure de calculer les gradients
+            optimizer.step() #Step pour metre à jour les poids du modèle en fonction des gradients calculés a letape precedente
 
             epoch_loss += loss.item()
             print(f"Epoch {epoch+1}/{EPOCHS} | Batch {batch_idx}/{len(train_loader)} | Loss: {loss.item():.4f}")

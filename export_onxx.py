@@ -2,6 +2,8 @@ import torch
 import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 
+# TODO : CHANGER LE GET_MODEL POUR QUIL MATCH AVEC LE GET_MODEL DU INFER_QUICK.PY
+
 def get_model(num_classes):
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights=None) 
     in_features = model.roi_heads.box_predictor.cls_score.in_features

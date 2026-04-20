@@ -1,6 +1,5 @@
-# copy_hard_negatives_round3.py
-from pathlib import Path
 import shutil
+from pathlib import Path
 
 HN3_DIR = Path("hard_negatives_round3")
 DATASET_IMG = Path(r"C:\Users\Marcello Fonseca\OneDrive\Bureau\TrainMerged\train\images")

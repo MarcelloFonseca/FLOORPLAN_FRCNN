@@ -2,9 +2,12 @@ import torch
 import random
 import torchvision
 from pathlib import Path
+import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw
 from torchvision.transforms import functional as F
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
+from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
+from torchvision.models.detection.transform import GeneralizedRCNNTransform
 
 CHECKPOINT_PATH = "floorplan_door_only4_hn2.pth" #chemin vers le checkpoint du modèle entrainé. IMPORTANT.
 # CHECKPOINT_PATH ="floorplan_door_only5_hn3.pth"
@@ -13,20 +16,33 @@ IMAGE_INDEX = 4
 # IMAGE_DIR = Path(r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_frcnn\TEST_PLAN4.png")
 # images = sorted(IMAGE_DIR.glob("*.*"))
 #IMAGE_PATH = images[IMAGE_INDEX]
-IMAGE_PATH = r"C:\Users\MarcelloFonseca\Desktop\TestML\TestPlanMachineLearning6.png"
-# IMAGE_PATH = r" C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_frcnn\TEST-PLAN3.png"
-OUTPUT_PATH = "prediction_output.png"
+# IMAGE_PATH = r"C:\Users\MarcelloFonseca\Desktop\TestML\TestPlanMachineLearning6.png"
+IMAGE_PATH = r"C:\Users\Marcello Fonseca\OneDrive\Bureau\floorplan_frcnn\TEST-PLAN5.png"
+OUTPUT_PATH = "prediction_output.png" 
 #SCORE_THRESHOLD = 0.55
 #SCORE_THRESHOLD = 0.50
-SCORE_THRESHOLD = 0.70
+SCORE_THRESHOLD = 0.75
+# SCORE_THRESHOLD = 0.85
 
-def get_model(num_classes: int):
-    model = torchvision.models.detection.fasterrcnn_resnet50_fpn(
-        weights=None,
-        weights_backbone=None
-    )
+# def get_model(num_classes: int):
+#     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(
+#         weights=None,
+#         weights_backbone=None
+#     )
+#     in_features = model.roi_heads.box_predictor.cls_score.in_features
+#     model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
+#     return model
+
+def get_model(num_classes):
+    model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights=None, weights_backbone=None)
     in_features = model.roi_heads.box_predictor.cls_score.in_features
     model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
+
+    model.transform = GeneralizedRCNNTransform(
+        min_size=1600, max_size=2666,
+        image_mean=[0.485, 0.456, 0.406],
+        image_std=[0.229, 0.224, 0.225],
+    )
     return model
 
 if __name__ == "__main__":
@@ -46,7 +62,7 @@ if __name__ == "__main__":
     print(f"pixel[0,0]: R={image_tensor[0,0,0]:.4f} G={image_tensor[1,0,0]:.4f} B={image_tensor[2,0,0]:.4f}")
 
     with torch.no_grad():
-        pred = model([image_tensor])[0]
+        pred = model([image_tensor])[0] #Les predictions se font ici...
 
     boxes = pred["boxes"].cpu()
     labels = pred["labels"].cpu()
